@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="no-js"> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Vue.js - ZmienKariere - Kalkulator</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" />
+        <link href="https://fonts.googleapis.com/css?family=Bungee+Hairline" rel="stylesheet" />
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                font-family: 'Bungee Hairline', cursive;
+            }
+            .container {
+                width: 33%;
+                margin-top: 10%;
+            }
+            .wyswietlacz {
+                text-align: right;
+                font-size: 36px;
+                border-bottom: 1px solid #f2f2f2;
+                margin-bottom: 10px;
+            }
+            button {
+                margin: 2px;
+            }
+        </style>
+    </head>
+    <body>
+            <div id="app">
+                <div class="container">
+                    <div class="row">
+                        <div class="col wyswietlacz">
+                            <span>{{ wyswietlacz }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button @click="zeruj" class="btn btn-primary col">C</button>
+                        <span class="col"></span>
+                        <button @click="ustawLiczbe('.')" class="btn btn-secondary col">.</button>
+                        <button @click="operator = '+'" class="btn btn-secondary col">+</button>
+                    </div>
+                    <div class="row">
+                        <button @click="ustawLiczbe('7')" class="btn btn-secondary col">7</button>
+                        <button @click="ustawLiczbe('8')" class="btn btn-secondary col">8</button>
+                        <button @click="ustawLiczbe('9')" class="btn btn-secondary col">9</button>
+                        <button @click="operator = '-'" class="btn btn-secondary col">-</button>
+                    </div>
+                    <div class="row">
+                        <button @click="ustawLiczbe('4')" class="btn btn-secondary col">4</button>
+                        <button @click="ustawLiczbe('5')" class="btn btn-secondary col">5</button>
+                        <button @click="ustawLiczbe('6')" class="btn btn-secondary col">6</button>
+                        <button @click="operator = '*'" class="btn btn-secondary col">*</button>
+                    </div>
+                    <div class="row">
+                        <button @click="ustawLiczbe('1')" class="btn btn-secondary col">1</button>
+                        <button @click="ustawLiczbe('2')" class="btn btn-secondary col">2</button>
+                        <button @click="ustawLiczbe('3')" class="btn btn-secondary col">3</button>
+                        <button @click="operator = '/'" class="btn btn-secondary col">/</button>
+                    </div>
+                    <div class="row">
+                        <button @click="ustawLiczbe('0')" class="btn btn-secondary col">0</button>
+                        <button @click="oblicz" class="btn btn-secondary col">=</button>
+                    </div>
+                </div>
+            </div>
+
+            <script src="http://unpkg.com/vue"></script>
+            <script>
+                new Vue({
+                    el: '#app',
+                    data: {
+                        a: '',
+                        b: '',
+                        suma: 0,
+                        wyswietlacz: 0,
+                        operator: null
+                    },
+                    methods: {
+                        ustawLiczbe(liczba) {
+                            if (this.operator === null) {
+                                this.a += liczba;
+                                this.wyswietlacz = this.a;
+                            } else {
+                                this.b += liczba;
+                                this.wyswietlacz = this.b;
+                            }
+                        },
+                        oblicz() {
+                            switch (this.operator) {
+                                case '+':
+                                    this.suma = parseFloat(this.a) + parseFloat(this.b);
+                                    break;
+                                case '-':
+                                    this.suma = parseFloat(this.a) - parseFloat(this.b);
+                                    break;
+                                case '*':
+                                    this.suma = parseFloat(this.a) * parseFloat(this.b);
+                                    break;
+                                case '/':
+                                    this.suma = parseFloat(this.a) / parseFloat(this.b);
+                                    break;
+                            }
+                            this.wyswietlacz = this.suma;
+                            this.a = '' + this.suma + '';
+                            this.b = '';
+                            this.operator = null;
+                        },
+                        zeruj() {
+                            this.a = '';
+                            this.b = '';
+                            this.suma = 0;
+                            this.wyswietlacz = 0;
+                            this.operator = null;
+                        }
+                    }
+                });
+            </script>
+
+    </body>
+</html>
